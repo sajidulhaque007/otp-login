@@ -16,12 +16,6 @@
         
         <form action="{{ route('generate-otp')}}" method="POST">
             @csrf
-            {{-- <div>
-                <label for="">Enter Mobile No</label>
-                <br>
-                <input type="text" name="mobile_no" required placeholder="Enter your registered mobile no.">
-            </div> --}}
-
             <div>
                 <x-jet-label for="mobile_no" value="{{ __('Enter your registered mobile no') }}" />
                 <x-jet-input id="mobile_no" class="block mt-1 w-full" type="text" name="mobile_no" :value="old('mobile_no')" required autofocus />

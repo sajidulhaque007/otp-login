@@ -10,7 +10,7 @@
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }} {{ $otp}}
+                {{ session('status') }}
             </div>
         @endif
         <form action="{{ route('verified-otp-login')}}" method="POST">
