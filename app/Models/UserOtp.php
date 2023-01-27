@@ -34,5 +34,6 @@ class UserOtp extends Model
             info("Error: ".$e->getMessage());
         }
     }
+  
     
 }

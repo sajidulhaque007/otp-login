@@ -36,13 +36,14 @@ class OTPController extends Controller
         return UserOtp::create([
             'user_id' => $user->id,
             'otp' => rand(12345,22222),
-            'expire_at' => $now->addMinutes(10)
+            'expire_at' => $now->addMinutes(5)
         ]);
     }
 
     public function otpVerification($user_id){
         return view('auth.otpVerification')->with([
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            
         ]);
     }
     public function otpLogin(Request $request){
@@ -51,7 +52,6 @@ class OTPController extends Controller
             'user_id' => 'required|exists:users,id'
         ]);
         $userOtp = UserOtp::where('user_id',$request->user_id)->where('otp',$request->otp)->first();
-        // $not_verified_otp_user = User::where('id',$request->user_id)->first();
         $now = now();
         if(!$userOtp){
             return redirect()->back()->with('status','Your OTP is not Valid');
@@ -64,16 +64,10 @@ class OTPController extends Controller
             $userOtp->update([
                 'expire_at'=> now(),
             ]);
-            $not_verified_otp_user = User::find($request->user_id);
-            $not_verified_otp_user->otp_verified = 1;
-            $not_verified_otp_user->save();
             Auth::login($user);
             return redirect('/dashboard');
         }
         return redirect(route('otp-login'))->with('status','Your OTP is not correct');
     }
 
-    public function d(){
-        return view('d');
-    }
 }
