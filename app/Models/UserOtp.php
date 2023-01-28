@@ -22,13 +22,11 @@ class UserOtp extends Model
             $account_id = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");
-
             $client = new Client($account_id,$auth_token);
             $client->messages->create($receiverNumber,[
                 'from' => $twilio_number,
                 'body' => $message,
             ]);
-
             info('OTP Sent Succesfully!');
         } catch(\Exception $e){
             info("Error: ".$e->getMessage());
